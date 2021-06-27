@@ -26,6 +26,7 @@ export default {
     data: () => ({
         queue: [],
         offset: 0,
+        //
     }),
     created() {
         this.mock();
