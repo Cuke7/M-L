@@ -2,12 +2,7 @@
     <div id="app">
         <Tinder key-name="id" :queue.sync="queue" :offset-y="10" @submit="onSubmit">
             <template slot-scope="scope">
-                <div
-                    class="pic"
-                    :style="{
-                        'background-image': `url(${scope.data.id})`,
-                    }"
-                />
+                <div class="pic" :style="{ backgroundImage: `url(${scope.data.id}` + ')' }" />
             </template>
             <img class="like-pointer" slot="like" src="./assets/like-txt.png" />
             <img class="nope-pointer" slot="nope" src="./assets/nope-txt.png" />
@@ -26,13 +21,11 @@ export default {
     data: () => ({
         queue: [],
         offset: 0,
-        //
+        liked: [],
     }),
-    created() {
-        this.mock();
-    },
+    created() {},
     methods: {
-        mock(count = 5) {
+        mock(count = source.length - 1) {
             const list = [];
             for (let i = 0; i < count; i++) {
                 list.push({ id: source[this.offset] });
@@ -40,11 +33,23 @@ export default {
             }
             this.queue = this.queue.concat(list);
         },
-        onSubmit({ item }) {
+        onSubmit(type, key, item) {
             // if (this.queue.length < 3) {
             //     this.mock();
             // }
+            console.log(type, item);
+            if (type.type == "like") {
+                let toto = type.key;
+                this.liked.push(toto);
+            }
+            console.log(this.liked);
         },
+    },
+    mounted() {
+        // let images = require.context("@/assets/images/", true);
+        // this.source = images.keys();
+        // console.log(images.keys());
+        this.mock();
     },
 };
 </script>
